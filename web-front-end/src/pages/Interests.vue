@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid row">
       <card>
-        <h3 align="center">Host 访问量</h3>
+        <h3 align="center">client 访问兴趣</h3>
         <div id="myChart1" :style="{ height: '750px'}"></div>
       </card>
   </div>

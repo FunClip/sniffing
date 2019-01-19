@@ -155,7 +155,7 @@ void
 mysql_connection_header(string id,string value1,string value2);
 
 void
-mysql_connection_ip(string id,string value1,string value2);
+mysql_connection_ip(string id,string value1,string value2,string url);
 
 
 /*
@@ -287,10 +287,12 @@ got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *packet)
 		//printf("payload_:%s\n",payload_);
 		//printf("payload:%s\n",payload.c_str());
 		vector<string> key, value;
+		string url;
         ss.clear();
 		ss.str(payload);
 		string tmp;
-		getline(ss, tmp);
+		string uri;
+		ss >> tmp; ss >> uri; ss.get();
 		tmp.clear();
 		while(getline(ss, tmp) && tmp != "\r") {
 			tmp.erase(tmp.end()-1,tmp.end());
@@ -302,20 +304,21 @@ got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *packet)
 					value.push_back("");
 				else
 					value.push_back(tmp.substr(pos+2));
+				if(tmp.substr(0, pos) == "Host")
+					url = tmp.substr(pos+2) + uri;
 				//cout << tmp.substr(0, pos) << tmp.substr(pos+2) << endl;
 			}
 			tmp.clear();
 		}
 		
-		if(key.size())
-			mysql_connection_ip(s1,inet_ntoa(ip->ip_src),inet_ntoa(ip->ip_dst));
+		if(key.size()){
+			mysql_connection_ip(s1,inet_ntoa(ip->ip_src),inet_ntoa(ip->ip_dst), url);
+        count++;}
         for(int i=0;i<key.size();i++)
-        { 
-    		
+        { 	
             mysql_connection_header(s1,key[i],value[i]);
             printf("req_id:%d\nheader_key:%s\nheader_values:%s\n",count,key[i].c_str(),value[1].c_str());
         }
-        count++;
 	}
 	
     }
@@ -367,7 +370,7 @@ void mysql_connection_header(string id,string value1,string value2)
       }
 }
 
-void mysql_connection_ip(string id,string value1,string value2)
+void mysql_connection_ip(string id,string value1,string value2,string url)
 {
     MYSQL my_connection;
 
@@ -381,14 +384,12 @@ void mysql_connection_ip(string id,string value1,string value2)
     if (mysql_real_connect(&my_connection, "localhost", "root", "","n161002213",0,NULL,CLIENT_FOUND_ROWS))
     {
         printf("Connection success\n");
-        string sql="insert into requests(id,src_ip,dest_ip) values(";
-        sql+=id+",'"+value1+"','"+value2+"')";
+        string sql="insert into requests(id,src_ip,dest_ip,url,url_hash) values(";
+        sql+=id+",'"+value1+"','"+value2+"','"+url+"',md5('"+url+"'))";
 
         res = mysql_query(&my_connection, sql.c_str());
 
-        if (!res)
-        {
-            printf("Inserted %lu rows\n",(unsigned long)mysql_affected_rows(&my_connection));
+        if (!res){
         /*里头的函数返回受表中影响的行数*/
         }
         else

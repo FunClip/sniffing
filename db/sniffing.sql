@@ -2,6 +2,8 @@ create table requests(
     id int not null comment '请求的id号',
     src_ip varchar(128) default '' not null comment '源ip地址',
     dest_ip varchar(128) default '' not null comment '目标ip地址',
+    url varchar(2048) default '' not null,
+    url_hash varchar(33) default '',
     cap_time timestamp not null default current_timestamp on update current_timestamp comment '入库时间',
     primary key(id)
 )CHARSET utf8;
