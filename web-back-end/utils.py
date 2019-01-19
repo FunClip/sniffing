@@ -53,11 +53,11 @@ def query_host_rank():
 
 def analysis_interests():
     cur = connection.cursor()
-    sql = "SELECT src_ip, header_value FROM requests, request_headers WHERE requests.id = request_headers.req_id AND header_key='Host'"
+    sql = "SELECT src_ip, url FROM requests"
     cur.execute(sql)
     res = pandas.DataFrame(list(cur.fetchall()))
     names = list(res.groupby(0).count().index)
-    hosts = list(res.groupby(1).count().sort_values(by=0, ascending=False).index)[0:10]
+    hosts = list(res.groupby(1).count().sort_values(by=0, ascending=False).index)[0:20]
     series = []
     for host in hosts:
         num = []
