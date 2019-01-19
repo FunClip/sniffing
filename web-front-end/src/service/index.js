@@ -2,7 +2,7 @@ import axios from 'axios'
 
 axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
 
-const path = "http://118.228.170.83:5000"
+const path = "http://localhost:5000"
 
 export const getTotal = () => {
     return axios.get(path + "/get_total")
