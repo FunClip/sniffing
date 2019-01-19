@@ -1,0 +1,8 @@
+{
+  "sidebar": {
+    "requests": "全部包展示",
+    "frequence": "频度排序",
+    "interests": "用户兴趣点分析",
+    "maps": "用户访问目标分布"
+  }
+}

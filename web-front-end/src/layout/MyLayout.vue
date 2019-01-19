@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <side-bar>
+    <side-bar data-background-color="darkblue">
       <template slot="links">
         <sidebar-link to="/requests" :name="$t('sidebar.requests')"/>
         <sidebar-link to="/frequence" :name="$t('sidebar.frequence')"/>

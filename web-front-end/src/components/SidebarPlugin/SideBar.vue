@@ -8,7 +8,7 @@
     <!-- -->
     <div class="sidebar-wrapper" id="style-3">
       <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+        <a href="#" class="simple-text logo-mini">
           <div class="logo-img"
                :class="{'logo-img-rtl': $rtl.isRTL}">
             <img
@@ -16,7 +16,7 @@
               alt="">
           </div>
         </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+        <a href="#" class="simple-text logo-normal">
           {{title}}
         </a>
       </div>
@@ -44,7 +44,7 @@
     props: {
       title: {
         type: String,
-        default: "Creative Tim"
+        default: "Sniffing Result"
       },
       backgroundColor: {
         type: String,
