@@ -3,7 +3,8 @@ import MyLayout from "@/layout/MyLayout.vue";
 
 // pages
 import Requests from "@/pages/Requests.vue";
-import Frequence from "@/pages/Frequence.vue";
+import FrequenceSrcRank from "@/pages/FrequenceSrcRank.vue";
+import FrequenceHostRank from "@/pages/FrequenceHostRank.vue";
 import Interests from "@/pages/Interests.vue";
 import Maps from "@/pages/Maps.vue";
 
@@ -19,9 +20,14 @@ const routes = [
         component: Requests
       },
       {
-        path: "frequence",
-        name: "frequence",
-        component: Frequence
+        path: "frequence_src_rank",
+        name: "frequence_src_rank",
+        component: FrequenceSrcRank
+      },
+      {
+        path: "frequence_host_rank",
+        name: "frequence_host_rank",
+        component: FrequenceHostRank
       },
       {
         path: "interests",

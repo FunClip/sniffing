@@ -12,5 +12,5 @@ module.exports = {
   css: {
     // Enable CSS source maps.
     sourceMap: true
-  }
+  },
 };

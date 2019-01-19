@@ -3,7 +3,8 @@
     <side-bar data-background-color="darkblue">
       <template slot="links">
         <sidebar-link to="/requests" :name="$t('sidebar.requests')"/>
-        <sidebar-link to="/frequence" :name="$t('sidebar.frequence')"/>
+        <sidebar-link to="/frequence_src_rank" :name="$t('sidebar.frequence_src_rank')"/>
+        <sidebar-link to="/frequence_host_rank" :name="$t('sidebar.frequence_host_rank')"/>
         <sidebar-link to="/interests" :name="$t('sidebar.interests')"/>
         <sidebar-link to="/maps" :name="$t('sidebar.maps')"/>
       </template>

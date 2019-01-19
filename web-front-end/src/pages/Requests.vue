@@ -33,7 +33,7 @@
       <div slot="footer" class="row">
         <div class=col-4></div>
         <div class=col-4>
-          <b-pagination size="lg" :total-rows="500" v-model="currentPage"></b-pagination>
+          <b-pagination size="lg" :total-rows="totalRows" :per-page=1 v-model="currentPage" @change="setValue($event)"></b-pagination>
         </div>
         <div class=col-4></div>
       </div>
@@ -42,7 +42,7 @@
 </template>
 <script>
 import BaseTable from "@/components/BaseTable.vue";
-import {getRequestInfo} from "@/service";
+import {getRequestInfo, getTotal} from "@/service";
 export default {
   components: {
     BaseTable
@@ -50,22 +50,30 @@ export default {
   data() {
     return {
       currentPage: 1,
-      columns: ['key', 'value']
+      columns: ['key', 'value'],
+      src_ip: null,
+      dest_ip: null,
+      tableData: null,
+      totalRows: null
     }
   },
-  computed:{
-    setValue: function() {
-      res = getRequestInfo(this.currentPage);
-      this.src_ip = res.src_ip;
-      this.dest_ip = res.dest_ip;
-      this.tableData = res.headers;
+  methods: {
+    setValue: function(event) {
+      this.currentPage = event;
+      return getRequestInfo(this.currentPage).then(res =>{
+      this.src_ip = res.data.src_ip;
+      this.dest_ip = res.data.dest_ip;
+      this.tableData = res.data.datas;
+    })
     }
   },
   mounted() {
-    res = getRequestInfo(this.currentPage);
-    this.src_ip = res.src_ip;
-    this.dest_ip = res.dest_ip;
-    this.tableData = res.headers;
+    getTotal().then(res => {this.totalRows = res.data.count})
+    getRequestInfo(this.currentPage).then(res =>{
+      this.src_ip = res.data.src_ip;
+      this.dest_ip = res.data.dest_ip;
+      this.tableData = res.data.datas;
+    })
   }
 }
 </script>

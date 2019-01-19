@@ -1,16 +1,16 @@
 <template>
   <div class="container-fluid row">
       <card>
-        <h3 align="center">Host 访问量</h3>
+        <h3 align="center">client HTTP Request访问量</h3>
         <div id="myChart1" :style="{ height: '750px'}"></div>
       </card>
   </div>
 </template>
 <script>
-import {getInterests} from "@/service";
+import {getSrcIPRank} from "@/service";
 export default {
 	methods: {
-		drawLine: function(names, series) {
+		drawLine: function(name, value) {
           // 基于准备好的dom, 初始化echarts
           let myChart = this.$echarts.init(document.getElementById('myChart1'))
 					// 绘制图表
@@ -39,7 +39,7 @@ export default {
     },
     yAxis: {
         type: 'category',
-        data: names,
+        data: name,
         axisLine: {
           lineStyle: {
             color: '#FFF'
@@ -49,32 +49,20 @@ export default {
     textStyle: {
       color: '#FFF'
     },
-    series: series
+    series: [
+        {
+            type: 'bar',
+            data: value
+        }
+    ]
 };
           myChart.setOption(option, true);
 	}},
 	mounted() {
-        getInterests().then(res => {
-            let series = []
-            let names = res.data.names;
-            res.data.series.forEach(element => {
-                let serie = {
-                name: '',
-                type: 'bar',
-                stack: '总量',
-                label: {
-                    normal: {
-                        show: true,
-                        position: 'insideRight'
-                    }
-                },
-                data: []
-            };
-                serie.name = element.name;
-                serie.data = element.data;
-                series.push(serie)
-            });
-            this.drawLine(names, series);
+		getSrcIPRank().then(res=> {
+            let name = res.data.name;
+            let value = res.data.counts;
+            this.drawLine(name, value);
         })
 	}
 }

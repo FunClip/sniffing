@@ -19,7 +19,7 @@ export let blueChartOptions = {
     position: "nearest"
   },
   scales: {
-    yAxes: [{
+    xAxes: [{
       barPercentage: 1.6,
       gridLines: {
         drawBorder: false,
@@ -34,7 +34,7 @@ export let blueChartOptions = {
       }
     }],
 
-    xAxes: [{
+    yAxes: [{
       barPercentage: 1.6,
       gridLines: {
         drawBorder: false,
@@ -191,7 +191,7 @@ export let barChartOptions = {
     position: "nearest"
   },
   scales: {
-    yAxes: [{
+    xAxes: [{
 
       gridLines: {
         drawBorder: false,
@@ -205,7 +205,7 @@ export let barChartOptions = {
         fontColor: "#9e9e9e"
       }
     }],
-    xAxes: [{
+    yAxes: [{
 
       gridLines: {
         drawBorder: false,
